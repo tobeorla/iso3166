@@ -16,13 +16,14 @@ class ISO3166 implements \IteratorAggregate, DataProvider
     const KEY_NUMERIC = 'numeric';
 
     /**
-     * @api
+     * Lookup ISO3166-1 data by alpha2 identifier.
      *
-     * @uses ::getByCode()
+     * @api
      *
      * @param string $alpha2
      *
-     * @throws \DomainException
+     * @throws \DomainException if input does not conform to alpha2 format.
+     * @throws \OutOfBoundsException if input does not exist in ISO3166-1.
      *
      * @return array
      */
@@ -32,17 +33,18 @@ class ISO3166 implements \IteratorAggregate, DataProvider
             throw new \DomainException('Not a valid alpha2: '.$alpha2);
         }
 
-        return $this->getByCode($alpha2);
+        return $this->get($alpha2);
     }
 
     /**
-     * @api
+     * Lookup ISO3166-1 data by alpha3 identifier.
      *
-     * @uses ::getByCode()
+     * @api
      *
      * @param string $alpha3
      *
-     * @throws \DomainException
+     * @throws \DomainException if input does not conform to alpha3 format.
+     * @throws \OutOfBoundsException if input does not exist in ISO3166-1.
      *
      * @return array
      */
@@ -52,17 +54,18 @@ class ISO3166 implements \IteratorAggregate, DataProvider
             throw new \DomainException('Not a valid alpha3: '.$alpha3);
         }
 
-        return $this->getByCode($alpha3);
+        return $this->get($alpha3);
     }
 
     /**
-     * @api
+     * Lookup ISO3166-1 data by numeric identifier (numerical string, that is).
      *
-     * @uses ::getByCode()
+     * @api
      *
      * @param string $numeric
      *
-     * @throws \DomainException
+     * @throws \DomainException if input does not conform to numeric format.
+     * @throws \OutOfBoundsException if input does not exist in ISO3166-1.
      *
      * @return array
      */
@@ -72,11 +75,11 @@ class ISO3166 implements \IteratorAggregate, DataProvider
             throw new \DomainException('Not a valid numeric: '.$numeric);
         }
 
-        return $this->getByCode($numeric);
+        return $this->get($numeric);
     }
 
     /**
-     * @api
+     * @deprecated
      *
      * @param string $code
      *
@@ -86,22 +89,11 @@ class ISO3166 implements \IteratorAggregate, DataProvider
      */
     public function getByCode($code)
     {
-        foreach ($this->countries as $country) {
-            if (0 === strcasecmp($code, $country[self::KEY_ALPHA2]) ||
-                0 === strcasecmp($code, $country[self::KEY_ALPHA3]) ||
-                0 === strcasecmp($code, $country[self::KEY_NUMERIC])
-            ) {
-                return $country;
-            }
-        }
-
-        throw new \OutOfBoundsException('ISO 3166-1 does not contain: '.$code);
+        return $this->get($code);
     }
 
     /**
      * @api
-     *
-     * @uses ::$countries
      *
      * @return array
      */
@@ -145,9 +137,34 @@ class ISO3166 implements \IteratorAggregate, DataProvider
     }
 
     /**
+     * Lookup ISO3166-1 data by given identifier.
+     *
+     * Looks for a match against all known identifying keys of each entry in the dataset.
+     *
+     * @param string $id
+     *
+     * @throws \OutOfBoundsException
+     *
+     * @return array
+     */
+    protected function get($id)
+    {
+        foreach ($this as $country) {
+            if (0 === strcasecmp($id, $country[self::KEY_ALPHA2]) ||
+                0 === strcasecmp($id, $country[self::KEY_ALPHA3]) ||
+                0 === strcasecmp($id, $country[self::KEY_NUMERIC])
+            ) {
+                return $country;
+            }
+        }
+
+        throw new \OutOfBoundsException('ISO 3166-1 does not contain: '.$id);
+    }
+
+    /**
      * @var array
      */
-    private $countries = [
+    protected $countries = [
         [
             'name' => 'Afghanistan',
             'alpha2' => 'AF',
