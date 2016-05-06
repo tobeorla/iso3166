@@ -89,6 +89,8 @@ class ISO3166 implements \IteratorAggregate, DataProvider
      */
     public function getByCode($code)
     {
+        trigger_error(__METHOD__ . ' is deprecated, instead use: getByAlpha2, getByAlpha3 or getByNumeric.', E_USER_DEPRECATED);
+
         return $this->get($code);
     }
 
