@@ -1,16 +1,12 @@
 {
-  "name": "alcohol/iso3166",
+  "name": "tobeorla/iso3166",
   "description": "ISO 3166-1 PHP Library",
   "keywords": ["ISO 3166", "ISO", "3166", "3166-1", "countries", "library"],
-  "homepage": "http://alcohol.github.io/iso3166/",
+  "homepage": "http://tobeorla.github.io/iso3166/",
   "license": "MIT",
-  "authors": [{
-    "name": "Rob Bast",
-    "email": "rob.bast@gmail.com"
-  }],
   "support": {
     "issues": "https://github.com/alcohol/iso3166/issues",
-    "source": "https://github.com/alcohol/iso3166"
+    "source": "https://github.com/tobeorla/iso3166"
   },
   "require": {
     "php": "^5.5 || ^7.0"
