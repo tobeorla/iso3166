@@ -14,6 +14,7 @@ class ISO3166 implements \IteratorAggregate, DataProvider
     const KEY_ALPHA2 = 'alpha2';
     const KEY_ALPHA3 = 'alpha3';
     const KEY_NUMERIC = 'numeric';
+    const KEY_NAME = 'name';
 
     /**
      * Lookup ISO3166-1 data by alpha2 identifier.
@@ -76,6 +77,41 @@ class ISO3166 implements \IteratorAggregate, DataProvider
         }
 
         return $this->get($numeric);
+    }
+    
+    /**
+     * Lookup ISO3166-1 data by name identifier.
+     *
+     * @api
+     *
+     * @param string $name
+     * @param boolean $acceptSimilar to accept similar country names as fallback
+     *
+     * @throws \DomainException if input is empty.
+     * @throws \OutOfBoundsException if input does not exist in ISO3166-1.
+     *
+     * @return array
+     */
+    public function getByName($name, $acceptSimilar = false)
+    {
+        if (empty($name)) {
+            throw new \DomainException('Missing name');
+        }
+        $similarMatch = false;
+
+        foreach ($this as $country) {
+            if (0 === strcasecmp($id, $country[self::KEY_NAME])) {
+                return $country;
+            } else if (stripos($country[self::KEY_NAME], $name) !== false) {
+                $similarMatch = $country;
+            }
+        }
+        
+        if ($acceptSimilar && $similarMatch) {
+            return $similarMatch;
+        }
+
+        throw new \OutOfBoundsException('ISO 3166-1 does not contain: ' . $name);
     }
 
     /**
