@@ -1,4 +1,4 @@
-# alcohol/iso3166
+# tobeorla/iso3166
 
 A PHP library providing ISO 3166-1 data.
 
@@ -35,6 +35,7 @@ $iso3166 = new ISO3166();
 $iso3166->getByAlpha2('NL');
 $iso3166->getByAlpha3('NLD');
 $iso3166->getByNumeric('528');
+$iso3166->getByName('Uruguay');
 
 // methods provided for convenience
 $iso3166->getAll();
@@ -63,10 +64,6 @@ Array
 ## Contributing
 
 Feel free to submit a pull request or create an issue.
-
-## License
-
-alcohol/iso3166 is licensed under the MIT license.
 
 ## Source(s)
 
