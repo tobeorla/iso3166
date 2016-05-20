@@ -100,7 +100,7 @@ class ISO3166 implements \IteratorAggregate, DataProvider
         $similarMatch = false;
 
         foreach ($this as $country) {
-            if (0 === strcasecmp($id, $country[self::KEY_NAME])) {
+            if (0 === strcasecmp($name, $country[self::KEY_NAME])) {
                 return $country;
             } else if (stripos($country[self::KEY_NAME], $name) !== false) {
                 $similarMatch = $country;
