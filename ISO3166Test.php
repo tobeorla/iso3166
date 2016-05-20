@@ -124,6 +124,30 @@ class ISO3166Test extends \PHPUnit_Framework_TestCase
         $iso3166 = new ISO3166();
         $this->assertEquals($expected, $iso3166->getByNumeric($numeric));
     }
+    
+    /**
+     * @testdox Calling getByName with a known name returns an associative array with the data.
+     * @dataProvider nameProvider
+     *
+     * @param string $name
+     * @param array $expected
+     */
+    public function testGetByName($name, array $expected)
+    {
+        $iso3166 = new ISO3166();
+        $this->assertEquals($expected, $iso3166->getByName($name));
+    }
+    
+    /**
+     * @testdox Calling getByName with an unknown name throws a OutOfBoundsException.
+     * @expectedException \OutOfBoundsException
+     * @expectedExceptionMessage ISO 3166-1 does not contain: Narnia
+     */
+    public function testGetByNameUnknown()
+    {
+        $iso3166 = new ISO3166();
+        $iso3166->getByName('Narnia');
+    }
 
     /**
      * @testdox Calling getAll returns an array with all elements.
@@ -222,6 +246,14 @@ class ISO3166Test extends \PHPUnit_Framework_TestCase
     public function numericProvider()
     {
         return $this->getCountries('numeric');
+    }
+    
+    /**
+     * @return array
+     */
+    public function nameProvider()
+    {
+        return $this->getCountries('name');
     }
 
     /**
