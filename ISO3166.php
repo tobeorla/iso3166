@@ -1951,6 +1951,13 @@ class ISO3166 implements \IteratorAggregate, DataProvider
             'currency' => 'YER',
         ],
         [
+           'name' => 'Yugoslavia',
+           'alpha2' => 'YU',
+           'alpha3' => 'YUG',
+           'numeric' => '891',
+           'currency' => 'EUR',
+        ],
+        [
             'name' => 'Zambia',
             'alpha2' => 'ZM',
             'alpha3' => 'ZMB',
